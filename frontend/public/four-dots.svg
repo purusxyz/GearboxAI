@@ -1,0 +1,13 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top Left -->
+  <circle cx="35" cy="35" r="12" fill="none" stroke="black" stroke-width="4"></circle>
+  
+  <!-- Top Right -->
+  <circle cx="85" cy="35" r="12" fill="none" stroke="black" stroke-width="4"></circle>
+  
+  <!-- Bottom Left -->
+  <circle cx="35" cy="85" r="12" fill="none" stroke="black" stroke-width="4"></circle>
+  
+  <!-- Bottom Right -->
+  <circle cx="85" cy="85" r="12" fill="none" stroke="black" stroke-width="4"></circle>
+</svg>

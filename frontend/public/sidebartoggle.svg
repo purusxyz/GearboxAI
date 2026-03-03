@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Outer rounded shape -->
+  <rect x="10" y="10" width="80" height="80" rx="22" ry="22" stroke="black" stroke-width="10"></rect>
+
+  <!-- Vertical divider -->
+  <line x1="45" y1="15" x2="45" y2="85" stroke="black" stroke-width="10" stroke-linecap="round"></line>
+</svg>

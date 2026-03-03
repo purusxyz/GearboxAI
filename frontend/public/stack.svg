@@ -1,0 +1,15 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- Back image card -->
+  <rect x="60" y="32" width="70" height="60" rx="14" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></rect>
+
+  <!-- Front image card -->
+  <rect x="36" y="52" width="70" height="60" rx="14" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></rect>
+
+  <!-- Sun / dot -->
+  <circle cx="82" cy="68" r="5" fill="black"></circle>
+
+  <!-- Mountain curve -->
+  <path d="M46 94
+       C56 82, 66 82, 76 90
+       C86 98, 96 102, 110 106" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+</svg>
