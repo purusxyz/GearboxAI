@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from "react-router"
 import { clsx } from 'clsx';
 
@@ -107,7 +107,7 @@ const Sidepanel = () => {
         <p className="px-2 text-gray-500 text-md">Chats</p>
         <div className="px-2">
           {
-            Array(100).fill(0).map((element:any, index:number) => {
+            Array.from({ length: 100 }).map((_, index: number) => {
               return (
                 <Link key={index} to={"#"} className="block p-2 text-md rounded-sm hover:bg-gray-200 truncate">Solve HCV Problem {index + 1}</Link>
            )
