@@ -27,7 +27,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://gearbox-frontend.vercel.app"
+      "https://gearbox-ai-omega.vercel.app",
     ],
     credentials: true,
   })
