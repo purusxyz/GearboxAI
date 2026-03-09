@@ -13,6 +13,7 @@ export default function LoginPage() {
     }
   }, []);
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   return (
     <div className="min-h-screen bg-[#f7f7f8]">
       <header className="p-6 text-2xl font-semibold">Chat-GPT</header>
@@ -50,7 +51,7 @@ export default function LoginPage() {
               variant="secondary"
               onClick={() =>
                 window.location.href =
-                  "http://localhost:5000/auth/google"
+                  `${BACKEND_URL}/auth/google`
               }
               className="w-full h-12 flex items-center justify-start px-6 gap-3"
             >
