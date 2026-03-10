@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/api/v1/chat", chatRoutes);
+app.use("/chat", chatRoutes);
 
 app.listen(5000, () => {
   console.log("✅ Server running on port 5000");
