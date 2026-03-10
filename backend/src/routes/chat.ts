@@ -1,12 +1,34 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import rateLimit from "express-rate-limit";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const router = express.Router();
 
 /* =====================================
+   GLOBAL GEMINI CLIENT (PERFORMANCE)
+===================================== */
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
+
+/* =====================================
+   RATE LIMITER
+===================================== */
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  message: { message: "Too many requests, slow down." },
+});
+
+/* =====================================
    JWT VERIFY MIDDLEWARE
 ===================================== */
+
 const verifyToken = (req: any, res: any, next: any) => {
   const authHeader = req.headers.authorization;
 
@@ -26,41 +48,97 @@ const verifyToken = (req: any, res: any, next: any) => {
 };
 
 /* =====================================
-   CHAT ROUTE (GEMINI VERSION)
+   MESSAGE VALIDATION
 ===================================== */
-router.post("/", verifyToken, async (req, res) => {
+
+const validateMessages = (messages: any) => {
+  if (!Array.isArray(messages)) return false;
+
+  for (const m of messages) {
+    if (!m.role || !m.content) return false;
+
+    if (
+      !["user", "assistant", "system"].includes(m.role) ||
+      typeof m.content !== "string"
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+/* =====================================
+   CONVERT CHAT → GEMINI FORMAT
+===================================== */
+
+const convertToGeminiHistory = (messages: any[]) => {
+  return messages.map((m) => ({
+    role: m.role === "assistant" ? "model" : "user",
+    parts: [{ text: m.content }],
+  }));
+};
+
+/* =====================================
+   CHAT ROUTE
+===================================== */
+
+router.post("/", verifyToken, chatLimiter, async (req, res) => {
   try {
     const { messages } = req.body;
 
-    if (!messages || !Array.isArray(messages)) {
+    if (!validateMessages(messages)) {
       return res.status(400).json({ message: "Invalid messages format" });
     }
 
-    /* ============================
-       🔥 GEMINI INIT (CHANGED)
-    ============================ */
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+    /* =====================================
+       STREAM HEADERS
+    ===================================== */
+
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Transfer-Encoding", "chunked");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+
+    /* =====================================
+       CREATE CHAT SESSION
+    ===================================== */
+
+    const history = convertToGeminiHistory(messages.slice(0, -1));
+
+    const chat = model.startChat({
+      history,
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1000,
+      },
     });
 
-    /* ============================
-       🔥 CONVERT MESSAGES (CHANGED)
-    ============================ */
-    const prompt = messages
-      .map((m: any) => `${m.role}: ${m.content}`)
-      .join("\n");
+    const lastMessage = messages[messages.length - 1]?.content;
 
-    /* ============================
-       🔥 GENERATE RESPONSE (CHANGED)
-    ============================ */
-    const result = await model.generateContent(prompt);
-    const response = result.response.text();
+    /* =====================================
+       STREAM RESPONSE
+    ===================================== */
 
-    res.json({ reply: response });
+    const result = await chat.sendMessageStream(lastMessage);
+
+    for await (const chunk of result.stream) {
+      const text = chunk.text();
+
+      if (text) {
+        res.write(text);
+      }
+    }
+
+    res.end();
   } catch (error) {
     console.error("Gemini Error:", error);
-    res.status(500).json({ message: "Gemini request failed" });
+
+    if (!res.headersSent) {
+      res.status(500).json({
+        message: "Gemini request failed",
+      });
+    }
   }
 });
 
