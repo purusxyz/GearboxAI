@@ -1,5 +1,5 @@
 import React from "react";
-// import { BookOpen, MessageSquare, Key } from "lucide-react";
+import {  Key } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
             
             <div className="flex justify-center mb-6">
               <div className="bg-zinc-800 p-4 rounded-xl">
-                <Key size={28} className="text-gray-300" />
+              <Key size={28} className="text-gray-300" />
               </div>
             </div>
 
