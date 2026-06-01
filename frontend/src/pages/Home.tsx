@@ -19,9 +19,9 @@ const Home: React.FC = () => {
             Log in
           </Link>
 
-          <button className="px-4 py-1.5 rounded-md bg-white text-black hover:bg-gray-200 transition">
+          <Link to="/login" className="px-4 py-1.5 rounded-md bg-white text-black hover:bg-gray-200 transition">
             Sign up
-          </button>
+          </Link>
         </div>
       </header>
 
@@ -70,13 +70,13 @@ const Home: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="px-5 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 transition">
+              <Link to="/login" className="px-5 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 transition">
                 Log in
-              </button>
+              </Link>
 
-              <button className="px-5 py-2 rounded-md bg-white text-black hover:bg-gray-200 transition">
+              <Link to="/login" className="px-5 py-2 rounded-md bg-white text-black hover:bg-gray-200 transition">
                 Sign up
-              </button>
+              </Link>
             </div>
 
           </div>
