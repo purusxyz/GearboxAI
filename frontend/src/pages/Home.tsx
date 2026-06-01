@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, MessageSquare, Key } from "lucide-react";
+// import { BookOpen, MessageSquare, Key } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
