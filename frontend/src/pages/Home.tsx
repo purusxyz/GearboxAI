@@ -31,7 +31,7 @@ const Home: React.FC = () => {
         <aside className="hidden md:flex flex-col w-64 border-r border-white/10 p-6 gap-6 text-gray-300">
           <nav className="flex flex-col gap-5 text-sm">
             
-            <a
+            {/* <a
               href="#"
               className="flex items-center gap-3 hover:text-white transition"
             >
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
             >
               <MessageSquare size={18} />
               Forum
-            </a>
+            </a> */}
 
           </nav>
         </aside>
