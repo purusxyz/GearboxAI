@@ -3,7 +3,7 @@ version: "3.9"
 services:
   backend:
     build: ./backend
-    container_name: express-server
+    container_name: gearbox-server
     ports:
       - "5000:5000"
     networks:
@@ -14,7 +14,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: react-client
+    container_name: gearbox-client
     ports:
       - "5173:3000"
     networks:
