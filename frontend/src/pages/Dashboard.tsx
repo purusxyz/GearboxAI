@@ -103,7 +103,9 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidepanel />
+      <div className="hidden md:block">
+  <Sidepanel />
+</div>
 
       <div className="flex-1 flex flex-col">
         <Header />
